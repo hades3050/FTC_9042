@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
 
-public class AutonHelper extends OpMode {
+public class BlueMountainAuton extends OpMode {
 
     DcMotor motorRight1;
     DcMotor motorRight2;
@@ -23,7 +23,7 @@ public class AutonHelper extends OpMode {
      * Constructor
      */
 
-    public AutonHelper() {
+    public BlueMountainAuton() {
 
     }
 
