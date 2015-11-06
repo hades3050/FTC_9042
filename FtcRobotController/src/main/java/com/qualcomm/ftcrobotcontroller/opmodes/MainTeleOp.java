@@ -1,69 +1,62 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+public class MainTeleOp extends OpHelperClean {
 
-public class MainTeleOp extends OpMode {
-
-    DcMotor motorRight1,
-            motorRight2;
-    DcMotor motorLeft1,
-            motorLeft2;
-    Servo servo1;
-
-    /**
-     * Constructor
-     */
+    //TODO: Talk to drive team about controller prefs/who controls what
+    //operator = gamepad2; driver = gamepad1
 
     public MainTeleOp(){
 
     }
 
-    @Override
-    public void init() {
-
-        motorRight1 = hardwareMap.dcMotor.get("r1");
-        motorRight2 = hardwareMap.dcMotor.get("r2");
-        servo1 = hardwareMap.servo.get("s1");
-
-        motorLeft1 = hardwareMap.dcMotor.get("l1");
-        motorLeft2 = hardwareMap.dcMotor.get("l2");
-
-        motorLeft1.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft2.setDirection(DcMotor.Direction.REVERSE);
-    }
 
     @Override
     public void loop() {
+        //enable basic feedback
+        basicTel();
 
-            //get the controller values from the controller
-            float leftStick = gamepad1.left_stick_y;
-            float rightStick = gamepad1.right_stick_y;
 
-            setLeftPower(leftStick);
-            setRightPower(rightStick);
-
-        if (gamepad1.right_bumper){
-            servo1.setPosition(0.0);
-            }
-        if (gamepad1.left_bumper){
-            servo1.setPosition(1.0);
-        }
-        else if(gamepad1.a)
-        {
-            servo1.setPosition(135.0/255);
+        //move robot using joysticks
+        if(gamepad1.right_bumper && gamepad1.left_bumper){
+            manualDrive(true);
+        } else{
+            manualDrive(false);
         }
 
-    }
-    public void setLeftPower(float power){
-        motorLeft1.setPower(scaleInput(power));
-        motorLeft2.setPower(scaleInput(power));
-    }
 
-    public void setRightPower(float power){
-        motorRight1.setPower(scaleInput(power));
-        motorRight2.setPower(scaleInput(power));
+        //Handle zipliner positions
+        if(gamepad2.x){
+            setZipLinePosition(1);
+        }
+
+        if(gamepad2.b){
+            setZipLinePosition(-1);
+        }
+
+        if(gamepad2.a){
+            setZipLinePosition(0);
+        }
+
+
+        //handle arm pivot
+        if(gamepad2.left_bumper){
+            setArmPivot(-.2);
+        }else if(gamepad2.right_bumper){
+            setArmPivot(.2);
+        } else{
+            setArmPivot(0);
+        }
+
+
+        //handle tape measure movement
+        if(gamepad2.left_trigger > 0) {
+            moveTapeMeasure(.2);
+        } else if(gamepad2.right_trigger > 0){
+            moveTapeMeasure(-.2);
+        } else{
+            moveTapeMeasure(0);
+        }
+
     }
 
     @Override
@@ -71,24 +64,4 @@ public class MainTeleOp extends OpMode {
 
     }
 
-    double scaleInput(double dVal) {
-        double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
-
-
-        int index = (int) (dVal * 16.0);
-        if (index < 0) {
-            index = -index;
-        } else if (index > 16) {
-            index = 16;
-        }
-        double dScale = 0.0;
-        if (dVal < 0) {
-            dScale = -scaleArray[index];
-        } else {
-            dScale = scaleArray[index];
-        }
-
-        return dScale;
-    }
 }
