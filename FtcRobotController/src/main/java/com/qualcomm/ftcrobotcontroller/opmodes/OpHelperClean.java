@@ -112,11 +112,11 @@ public class OpHelperClean extends OpMode{
 
     //reset all the drive encoders and return true if all encoders read 0
     public boolean resetEncoders() {
-        frontLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        backLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        frontLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        backLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        frontRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        backRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        backRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
         return (frontLeft.getCurrentPosition() == 0 &&
                 backLeft.getCurrentPosition() == 0 &&
@@ -140,21 +140,21 @@ public class OpHelperClean extends OpMode{
     //sets all drive motors to encoder mode
     public void setToEncoderMode(){
 
-        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        backLeft.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
-        frontRight.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        backRight.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
     }
 
     //sets all drive motors to run without encoders
     public void setToWOEncoderMode()
     {
-        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
-        frontRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
     }
 
     public boolean runStraight(double distance_in_inches, boolean speed) {//Sets values for driving straight, and indicates completion
@@ -273,9 +273,35 @@ public class OpHelperClean extends OpMode{
         return false;
     }
 
+
+    public boolean turn (double leftRotations, double rightRotations){
+        setToEncoderMode();
+        if (leftRotations == 0){
+            rightTarget = (int)rightRotations*1120;
+            leftTarget = 0;
+            setTargetValueMotor();
+            setMotorPower(0,0.4);
+            if (hasReached()){
+                setMotorPower(0,0);
+                return true;
+            }
+            return false;
+        }
+        if (rightRotations == 0){
+            leftTarget = (int)leftRotations*1120;
+            rightTarget=0;
+            setTargetValueMotor();
+            setMotorPower(0.4,0);
+            if (hasReached()){
+                setMotorPower(0,0);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
     //TODO: Make a function to move drive at same speed as the tape measure (Eric's suggestion)
     public void upMountain(){
-
     }
 
     public void loop(){
