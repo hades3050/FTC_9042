@@ -9,7 +9,11 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by aravindkoneru on 10/28/15.
  */
+<<<<<<< HEAD
 public class OpHelperClean extends OpMode{
+=======
+public class OpHelperClean extends OpMode {
+>>>>>>> f61e954c3bbb0f9e5aed79c449a8956b4270b371
 
     //driving motors
     DcMotor frontLeft,
@@ -24,7 +28,11 @@ public class OpHelperClean extends OpMode{
             armPivot;
 
     //zipline servo
+<<<<<<< HEAD
     Servo zipLiner, plow1,plow2;
+=======
+    Servo zipLiner;
+>>>>>>> f61e954c3bbb0f9e5aed79c449a8956b4270b371
 
     //encoder targets
     private int rightTarget,
@@ -32,6 +40,7 @@ public class OpHelperClean extends OpMode{
 
     //SERVO CONSTANTS
     private final double SERVO_MAX=1,
+<<<<<<< HEAD
             SERVO_MIN=0,
             SERVO_NEUTRAL = 9.0/17,//Stops the continuous servo
             PLOW_UP = 0.8,
@@ -40,15 +49,27 @@ public class OpHelperClean extends OpMode{
     //MOTOR RANGES
     private final double MOTOR_MAX=1,
             MOTOR_MIN=-1;
+=======
+                         SERVO_MIN=0,
+                         SERVO_NEUTRAL = 9.0/17;//Stops the continuous servo
+
+    //MOTOR RANGES
+    private final double MOTOR_MAX=1,
+                         MOTOR_MIN=-1;
+>>>>>>> f61e954c3bbb0f9e5aed79c449a8956b4270b371
 
     //ENCODER CONSTANTS TODO: Calibrate all of these values
     private final double CIRCUMFERENCE_INCHES = 4*Math.PI,
             TICKS_PER_ROTATION = 1200/1.05,
             TICKS_PER_INCH = TICKS_PER_ROTATION/CIRCUMFERENCE_INCHES,
+<<<<<<< HEAD
             TOLERANCE = 40;
 
     //WHEELBASE CONSTANTS
     private final double WHEELBASEWIDTH = 15;
+=======
+            TOLERANCE = 10;
+>>>>>>> f61e954c3bbb0f9e5aed79c449a8956b4270b371
 
     public OpHelperClean(){
 
@@ -158,7 +179,6 @@ public class OpHelperClean extends OpMode{
 
         frontRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-    }
 
     //sets all drive motors to run without encoders
     public void setToWOEncoderMode()
@@ -188,7 +208,6 @@ public class OpHelperClean extends OpMode{
         }
         return false;
     }
-
 
     //sets the target position for the drive encoders
     public void setTargetValueMotor(){
