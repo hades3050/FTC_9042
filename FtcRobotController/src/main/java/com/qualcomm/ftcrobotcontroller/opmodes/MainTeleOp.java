@@ -14,7 +14,7 @@ public class MainTeleOp extends OpHelperClean {
         basicTel();
 
         //move robot using joysticks
-        if(gamepad1.right_bumper && gamepad1.left_bumper){
+        if(gamepad1.right_bumper){
             manualDrive(true);
         } else{
             manualDrive(false);
@@ -28,6 +28,12 @@ public class MainTeleOp extends OpHelperClean {
             setMotorPower(-1,-1);
         }
 
+        if(gamepad1.dpad_down) {
+            setPlowPosition(false);
+        }
+        if (gamepad1.dpad_up){
+            setPlowPosition(true);
+        }
 
         //Handle zipliner positions
         if(gamepad2.right_bumper){
@@ -57,6 +63,7 @@ public class MainTeleOp extends OpHelperClean {
         }
 
     }
+
 
     @Override
     public void stop() {

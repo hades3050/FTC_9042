@@ -24,7 +24,7 @@ public class OpHelperClean extends OpMode{
             armPivot;
 
     //zipline servo
-    Servo zipLiner;
+    Servo zipLiner, plow1,plow2;
 
     //encoder targets
     private int rightTarget,
@@ -33,7 +33,9 @@ public class OpHelperClean extends OpMode{
     //SERVO CONSTANTS
     private final double SERVO_MAX=1,
             SERVO_MIN=0,
-            SERVO_NEUTRAL = 9.0/17;//Stops the continuous servo
+            SERVO_NEUTRAL = 9.0/17,//Stops the continuous servo
+            PLOW_UP = 0.8,
+            PLOW_DOWN = 0.4;
 
     //MOTOR RANGES
     private final double MOTOR_MAX=1,
@@ -135,6 +137,17 @@ public class OpHelperClean extends OpMode{
 
         frontRight.setPower(rightPower);
         backRight.setPower(rightPower);
+    }
+
+    public void setPlowPosition(boolean up){
+        if (up){
+            plow1.setPosition(PLOW_UP);
+            plow2.setPosition(PLOW_UP);
+        }
+        else if (!up){
+            plow1.setPosition(PLOW_DOWN);
+            plow2.setPosition(PLOW_DOWN);
+        }
     }
 
     //sets all drive motors to encoder mode
